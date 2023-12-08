@@ -1,0 +1,2 @@
+class CryptomusAPIException(Exception):
+    pass
