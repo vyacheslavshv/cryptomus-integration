@@ -36,15 +36,15 @@ class CryptomusAPI:
             raise CryptomusAPIException(response.text)
         return response.json()['result']
 
-    def create_invoice(self, amount, order_id, currency='USDT', network='tron',
+    def create_invoice(self, amount, order_id, currency=None, network=None,
                        additional_data=None, **kwargs):
         """
         Creates a new invoice.
 
         :param amount: Amount to be paid.
         :param order_id: Unique order ID in your system.
-        :param currency: Currency code (default is 'USDT').
-        :param network: Blockchain network code (default is 'tron').
+        :param currency: Currency code.
+        :param network: Blockchain network code.
         :param additional_data: Optional additional data.
         :return: Details of the created invoice.
         """
@@ -116,3 +116,12 @@ class CryptomusAPI:
         if cursor:
             data['cursor'] = cursor
         return self.send_request("payment/list", data)
+
+    def list_of_services(self):
+        """
+        Returns a list of available payment services:
+        currencies, networks, minimum and maximum limits, commissions.
+
+        :return: List of available currencies, networks, minimum and maximum limits.
+        """
+        return self.send_request("payment/services", {})
